@@ -6,15 +6,15 @@ on:
       ado-org:
         description: 'ado-org'
         required: true
-        default: 'jjohanning0798'
+        default: 'ksinform'
       ado-project:
         description: 'ado-project'
         required: true
-        default: 'PartsUnlimited'
+        default: 'D365BC.KS.TWPAYROLL'
       ado_area_path:
         description: 'ADO area path to migrate - uses the UNDER operator'
         required: true
-        default: 'migrate'
+        default: 'D365BC.KS.TWPAYROLL'
       ado_migrate_closed_workitems:
         description: 'Migrate closed work items'
         required: true
@@ -28,11 +28,11 @@ on:
       gh-org:
         description: 'gh-org'
         required: true
-        default: 'joshjohanning-org'
+        default: 'ksinform'
       gh-repo:
         description: 'gh-org'
         required: true
-        default: 'migrate-ado-workitems'
+        default: 'D365BC.KS.TWPAYROLL'
       gh_update_assigned_to:
         description: 'Update Assigned To'
         required: true
@@ -58,8 +58,8 @@ jobs:
       - uses: tibdex/github-app-token@v1
         id: get_installation_token
         with: 
-          app_id: 179484
-          installation_id: 23995058
+          app_id: 933743
+          installation_id: 52352218
           private_key: ${{ secrets.PRIVATE_KEY }}
       
       - name: run migration
