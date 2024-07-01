@@ -114,8 +114,8 @@ ForEach($workitem in $query) {
         $ado_assigned_to_unique_name = $details.fields.{System.AssignedTo}.uniqueName
     }
     else {
-        $ado_assigned_to_display_name = ""
-        $ado_assigned_to_unique_name = ""
+        $ado_assigned_to_display_name = "ks-jackwang"
+        $ado_assigned_to_unique_name = "ks-jackwang"
     }
     
     # create the details table
@@ -171,7 +171,7 @@ ForEach($workitem in $query) {
     # update assigned to in GitHub if the option is set - tries to use ado email to map to github username
     if ($gh_update_assigned_to -eq $true -and $ado_assigned_to_unique_name -ne "") {
         $gh_assignee=$ado_assigned_to_unique_name.Split("@")[0]
-        $gh_assignee=$gh_assignee.Replace(".", "-") + $gh_assigned_to_user_suffix
+        $gh_assignee=$gh_assigned_to_user_suffix+$gh_assignee.Replace("_", "")
         write-host "  trying to assign to: $gh_assignee"
         $assigned=gh issue edit $issue_url --add-assignee "$gh_assignee"
     }
