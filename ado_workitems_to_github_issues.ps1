@@ -79,6 +79,7 @@ ForEach($workitem in $query) {
     # double quotes in the title must be escaped with \ to be passed to gh cli
     # workaround for https://github.com/cli/cli/issues/3425 and https://stackoverflow.com/questions/6714165/powershell-stripping-double-quotes-from-command-line-arguments
     $title = $details.fields.{System.Title} -replace "`"","`\`""
+    $title = "orig#"+$workitemId+$title # modified by Jack 
 
     Write-Host "Copying work item $workitemId to $gh_org/$gh_repo on github";
 
