@@ -178,7 +178,8 @@ ForEach($workitem in $query) {
         $gh_assignee=$gh_assigned_to_user_suffix+$gh_assignee.Replace("_", "")
         write-host "  trying to assign to: $gh_assignee"
         $assigned=gh issue edit $issue_url --add-assignee "$gh_assignee"
-        if($assigned)
+        write-host "  assigned: $assigned"
+        if(not $assigned)
         {
             write-host "  $gh_assignee assignment failed, trying to assign to: $gh_assigned_to_defaultuser"
             gh issue edit $issue_url --add-assignee "$gh_assigned_to_defaultuser"
