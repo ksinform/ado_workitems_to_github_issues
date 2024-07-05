@@ -179,7 +179,7 @@ ForEach($workitem in $query) {
         write-host "  trying to assign to: $gh_assignee"
         $assigned=gh issue edit $issue_url --add-assignee "$gh_assignee"
         write-host "  assigned: $assigned"
-        if(not $assigned)
+        if($assigned -gt 0)
         {
             write-host "  $gh_assignee assignment failed, trying to assign to: $gh_assigned_to_defaultuser"
             gh issue edit $issue_url --add-assignee "$gh_assigned_to_defaultuser"
