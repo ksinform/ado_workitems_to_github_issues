@@ -178,7 +178,8 @@ ForEach($workitem in $query) {
         $gh_assignee=$gh_assigned_to_user_suffix+$gh_assignee.Replace("_", "")
         write-host "  trying to assign to: $gh_assignee"
         $assigned=gh issue edit $issue_url --add-assignee "$gh_assignee"
-        # write-host "  assigned: $assigned"
+        write-host "  assigned: $assigned"
+        write-host "  Length: $assigned.Length"
         if($assigned -eq "")
         {
             write-host "  $gh_assignee assignment failed, trying to assign to default user: $gh_assigned_to_defaultuser"
@@ -208,3 +209,4 @@ ForEach($workitem in $query) {
     
 }
 Write-Host "Total items copied: $count"
+$assigned|Get-Member
