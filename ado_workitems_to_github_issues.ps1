@@ -209,4 +209,3 @@ ForEach($workitem in $query) {
     
 }
 Write-Host "Total items copied: $count"
-$assigned|Get-Member
