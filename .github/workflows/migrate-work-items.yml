@@ -42,6 +42,10 @@ on:
         description: 'EMU suffix'
         required: true
         default: 'ks-'
+      gh_assigned_to_defaultuser:
+        description: 'default assigned user if the user is not exist'
+        required: false
+        default: 'ks-jackwang'
       gh_add_ado_comments:
         description: 'Add ADO Comments'
         required: true
