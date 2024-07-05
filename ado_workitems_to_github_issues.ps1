@@ -44,9 +44,11 @@ param (
     [string]$gh_repo, # GitHub repository to create the issues in
     [bool]$gh_update_assigned_to = $false, # try to update the assigned to field in GitHub
     [string]$gh_assigned_to_user_suffix = "", # the emu suffix, ie: "_corp"
-    [string]$gh_assigned_to_defaultuser = "", # the default assigned user if the user is not exist , ie: "ks_jackwang"
     [bool]$gh_add_ado_comments = $false # try to get ado comments
 )
+
+# You may only define up to 10 inputs for a workflow_dispatch event, so hard-coded
+$gh_assigned_to_defaultuser = "ks-jackwang"
 
 # Set the auth token for az commands
 $env:AZURE_DEVOPS_EXT_PAT = $ado_pat;
@@ -178,7 +180,7 @@ ForEach($workitem in $query) {
         $assigned=gh issue edit $issue_url --add-assignee "$gh_assignee"
         if($assigned)
         {
-            write-host "  aasignment failed, trying to assign to: $gh_assignee"
+            write-host "  $gh_assignee assignment failed, trying to assign to: $gh_assigned_to_defaultuser"
             gh issue edit $issue_url --add-assignee "$gh_assigned_to_defaultuser"
         }
     }
