@@ -44,6 +44,7 @@ param (
     [string]$gh_repo, # GitHub repository to create the issues in
     [bool]$gh_update_assigned_to = $false, # try to update the assigned to field in GitHub
     [string]$gh_assigned_to_user_suffix = "", # the emu suffix, ie: "_corp"
+    [string]$gh_assigned_to_defaultuser = "", # the default assigned user if the user is not exist , ie: "ks_jackwang"
     [bool]$gh_add_ado_comments = $false # try to get ado comments
 )
 
@@ -79,7 +80,7 @@ ForEach($workitem in $query) {
     # double quotes in the title must be escaped with \ to be passed to gh cli
     # workaround for https://github.com/cli/cli/issues/3425 and https://stackoverflow.com/questions/6714165/powershell-stripping-double-quotes-from-command-line-arguments
     $title = $details.fields.{System.Title} -replace "`"","`\`""
-    $title = "orig#"+$workitemId+$title # modified by Jack 
+    $title = "orig# "+$workitemId+$title # modified by Jack 
 
     Write-Host "Copying work item $workitemId to $gh_org/$gh_repo on github";
 
@@ -115,8 +116,8 @@ ForEach($workitem in $query) {
         $ado_assigned_to_unique_name = $details.fields.{System.AssignedTo}.uniqueName
     }
     else {
-        $ado_assigned_to_display_name = "ks-jackwang"
-        $ado_assigned_to_unique_name = "ks-jackwang"
+        $ado_assigned_to_display_name = "jackwang"
+        $ado_assigned_to_unique_name = "jackwang"
     }
     
     # create the details table
@@ -175,6 +176,11 @@ ForEach($workitem in $query) {
         $gh_assignee=$gh_assigned_to_user_suffix+$gh_assignee.Replace("_", "")
         write-host "  trying to assign to: $gh_assignee"
         $assigned=gh issue edit $issue_url --add-assignee "$gh_assignee"
+        if($assigned)
+        {
+            write-host "  aasignment failed, trying to assign to: $gh_assignee"
+            gh issue edit $issue_url --add-assignee "$gh_assigned_to_defaultuser"
+        }
     }
 
     # add the comment
